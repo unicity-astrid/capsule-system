@@ -1,0 +1,40 @@
+[package]
+name = "astrid-capsule-system"
+version = "0.1.0"
+description = "System management tools — lets the LLM inspect and manage its own runtime"
+authors = ["Astrid Core Team"]
+astrid-version = ">=0.1.0"
+
+[[component]]
+id = "system-tools"
+file = "astrid_capsule_system.wasm"
+type = "executable"
+
+[capabilities]
+fs_read = ["home://"]
+ipc_publish = []
+
+[[tool]]
+name = "list_capsules"
+description = "List all installed capsules with their versions, exports, and imports."
+input_schema = { type = "object", properties = {}, required = [] }
+
+[[tool]]
+name = "inspect_capsule"
+description = "Read a capsule's full manifest (Capsule.toml) and installation metadata (meta.json)."
+input_schema = { type = "object", properties = { name = { type = "string", description = "Capsule name (e.g. astrid-capsule-session)" } }, required = ["name"] }
+
+[[tool]]
+name = "list_interfaces"
+description = "List all WIT interface definitions available in the system."
+input_schema = { type = "object", properties = {}, required = [] }
+
+[[tool]]
+name = "read_interface"
+description = "Read a WIT interface definition file. Returns the full typed contract."
+input_schema = { type = "object", properties = { name = { type = "string", description = "Interface filename (e.g. session.wit)" } }, required = ["name"] }
+
+[[tool]]
+name = "system_status"
+description = "Show runtime status: loaded capsules count, satisfied/unsatisfied imports, interface coverage."
+input_schema = { type = "object", properties = {}, required = [] }
