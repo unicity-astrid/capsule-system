@@ -272,10 +272,10 @@ let _ = log::info(format!("processed {} items", count));
 
 ## Reading WIT Interfaces at Runtime
 
-WIT files are installed to `home://wit/astrid/` during `astrid init`. Use them to understand message schemas:
+WIT files are installed to `home://wit/` during `astrid init`. Use them to understand message schemas:
 
 ```rust
-let session_wit = astrid_sdk::fs::read_to_string("home://wit/astrid/session.wit")?;
+let session_wit = astrid_sdk::fs::read_to_string("home://wit/session.wit")?;
 ```
 
 Available interfaces: `session.wit`, `tool.wit`, `llm.wit`, `prompt.wit`, `context.wit`, `hook.wit`, `registry.wit`, `spark.wit`, `types.wit`.

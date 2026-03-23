@@ -24,8 +24,8 @@ use serde::{Deserialize, Serialize};
 /// Capsule directory under the principal home.
 const CAPSULES_DIR: &str = "home://capsules";
 
-/// Standard WIT interface directory.
-const WIT_DIR: &str = "home://wit/astrid";
+/// Standard WIT interface directory — per-principal, accessible via `home://wit/`.
+const WIT_DIR: &str = "home://wit";
 
 /// Skill installed to `home://skills/capsule-development/SKILL.md` on install.
 const CAPSULE_DEV_SKILL: &str = include_str!("skills/capsule-development/SKILL.md");
