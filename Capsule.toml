@@ -11,7 +11,8 @@ file = "astrid_capsule_system.wasm"
 type = "executable"
 
 [capabilities]
-fs_read = ["home://"]
+fs_read  = ["home://"]
+fs_write = ["home://skills/"]
 ipc_publish = ["tool.v1.execute.*.result", "tool.v1.response.describe.*"]
 ipc_subscribe = ["tool.v1.execute.list_capsules", "tool.v1.execute.inspect_capsule", "tool.v1.execute.list_interfaces", "tool.v1.execute.read_interface", "tool.v1.execute.system_status", "tool.v1.request.describe"]
 
