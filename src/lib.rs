@@ -27,6 +27,9 @@ const CAPSULES_DIR: &str = "home://capsules";
 /// Standard WIT interface directory.
 const WIT_DIR: &str = "home://wit/astrid";
 
+/// Skill installed to `home://skills/capsule-development/SKILL.md` on install.
+const CAPSULE_DEV_SKILL: &str = include_str!("skills/capsule-development/SKILL.md");
+
 #[derive(Default)]
 pub struct SystemTools;
 
@@ -111,6 +114,23 @@ fn list_entries(path: &str) -> Result<Vec<String>, SysError> {
 
 #[capsule]
 impl SystemTools {
+    /// Install the capsule-development skill to `home://skills/capsule-development/SKILL.md`
+    /// so the skills capsule can surface it to the LLM.
+    #[astrid::install]
+    pub fn on_install(&self) -> Result<(), SysError> {
+        if !astrid_sdk::fs::exists("home://skills")? {
+            astrid_sdk::fs::create_dir("home://skills")?;
+        }
+        if !astrid_sdk::fs::exists("home://skills/capsule-development")? {
+            astrid_sdk::fs::create_dir("home://skills/capsule-development")?;
+        }
+        astrid_sdk::fs::write(
+            "home://skills/capsule-development/SKILL.md",
+            CAPSULE_DEV_SKILL.as_bytes(),
+        )?;
+        Ok(())
+    }
+
     /// List all installed capsules with their versions, exports, and imports.
     /// Returns a JSON array of capsule summaries.
     #[astrid::tool("list_capsules")]
