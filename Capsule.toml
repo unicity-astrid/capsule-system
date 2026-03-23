@@ -12,29 +12,29 @@ type = "executable"
 
 [capabilities]
 fs_read = ["home://"]
-ipc_publish = []
+ipc_publish = ["tool.v1.execute.*.result", "tool.v1.response.describe.*"]
+ipc_subscribe = ["tool.v1.execute.list_capsules", "tool.v1.execute.inspect_capsule", "tool.v1.execute.list_interfaces", "tool.v1.execute.read_interface", "tool.v1.execute.system_status", "tool.v1.request.describe"]
 
-[[tool]]
-name = "list_capsules"
-description = "List all installed capsules with their versions, exports, and imports."
-input_schema = { type = "object", properties = {}, required = [] }
+[[interceptor]]
+event = "tool.v1.execute.list_capsules"
+action = "tool_execute_list_capsules"
 
-[[tool]]
-name = "inspect_capsule"
-description = "Read a capsule's full manifest (Capsule.toml) and installation metadata (meta.json)."
-input_schema = { type = "object", properties = { name = { type = "string", description = "Capsule name (e.g. astrid-capsule-session)" } }, required = ["name"] }
+[[interceptor]]
+event = "tool.v1.execute.inspect_capsule"
+action = "tool_execute_inspect_capsule"
 
-[[tool]]
-name = "list_interfaces"
-description = "List all WIT interface definitions available in the system."
-input_schema = { type = "object", properties = {}, required = [] }
+[[interceptor]]
+event = "tool.v1.execute.list_interfaces"
+action = "tool_execute_list_interfaces"
 
-[[tool]]
-name = "read_interface"
-description = "Read a WIT interface definition file. Returns the full typed contract."
-input_schema = { type = "object", properties = { name = { type = "string", description = "Interface filename (e.g. session.wit)" } }, required = ["name"] }
+[[interceptor]]
+event = "tool.v1.execute.read_interface"
+action = "tool_execute_read_interface"
 
-[[tool]]
-name = "system_status"
-description = "Show runtime status: loaded capsules count, satisfied/unsatisfied imports, interface coverage."
-input_schema = { type = "object", properties = {}, required = [] }
+[[interceptor]]
+event = "tool.v1.execute.system_status"
+action = "tool_execute_system_status"
+
+[[interceptor]]
+event = "tool.v1.request.describe"
+action = "tool_describe"
