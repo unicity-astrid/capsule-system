@@ -85,6 +85,7 @@ crate-type = ["cdylib"]
 astrid-sdk  = "0.5.0"
 serde       = { version = "1", features = ["derive"] }
 serde_json  = "1"
+uuid        = { version = "1", features = ["v4"] }
 ```
 
 ## lib.rs — Skeleton
@@ -267,7 +268,7 @@ log::info("capsule started")?;
 log::warn("something unusual")?;
 log::error("something failed")?;
 // Or with format:
-let _ = log::info(format!("processed {} items", count));
+log::info(format!("processed {} items", count))?;
 ```
 
 ## Reading WIT Interfaces at Runtime
