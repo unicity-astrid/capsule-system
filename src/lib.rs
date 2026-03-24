@@ -21,8 +21,8 @@ use astrid_sdk::prelude::*;
 use astrid_sdk::schemars;
 use serde::{Deserialize, Serialize};
 
-/// Capsule directory under the principal home.
-const CAPSULES_DIR: &str = "home://capsules";
+/// Capsule directory under the principal home (FHS layout).
+const CAPSULES_DIR: &str = "home://.local/capsules";
 
 /// Standard WIT interface directory — per-principal, accessible via `home://wit/`.
 const WIT_DIR: &str = "home://wit";
@@ -118,16 +118,19 @@ impl SystemTools {
     /// so the skills capsule can surface it to the LLM.
     #[astrid::install]
     pub fn on_install(&self) -> Result<(), SysError> {
-        if !astrid_sdk::fs::exists("home://skills")? {
-            astrid_sdk::fs::create_dir("home://skills")?;
+        // home:// may not be available during lifecycle dispatch when installing
+        // without a running daemon. Use unwrap_or to silently skip — the skill
+        // will be written on the next full boot once the principal home is mounted.
+        if !astrid_sdk::fs::exists("home://skills").unwrap_or(false) {
+            let _ = astrid_sdk::fs::create_dir("home://skills");
         }
-        if !astrid_sdk::fs::exists("home://skills/capsule-development")? {
-            astrid_sdk::fs::create_dir("home://skills/capsule-development")?;
+        if !astrid_sdk::fs::exists("home://skills/capsule-development").unwrap_or(false) {
+            let _ = astrid_sdk::fs::create_dir("home://skills/capsule-development");
         }
-        astrid_sdk::fs::write(
+        let _ = astrid_sdk::fs::write(
             "home://skills/capsule-development/SKILL.md",
             CAPSULE_DEV_SKILL.as_bytes(),
-        )?;
+        );
         Ok(())
     }
 
