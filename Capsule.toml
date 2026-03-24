@@ -2,7 +2,7 @@
 name = "astrid-capsule-system"
 version = "0.1.0"
 description = "System management tools — lets the LLM inspect and manage its own runtime"
-authors = ["Astrid Core Team"]
+authors = ["Joshua J. Bouw <dev@joshuajbouw.com>", "Unicity Labs <info@unicity-labs.com>"]
 astrid-version = ">=0.1.0"
 
 [[component]]
