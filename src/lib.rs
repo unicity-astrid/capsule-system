@@ -119,14 +119,13 @@ impl SystemTools {
     #[astrid::install]
     pub fn on_install(&self) -> Result<(), SysError> {
         // home:// may not be available during lifecycle dispatch when installing
-        // without a running daemon. Use unwrap_or to silently skip — the skill
-        // will be written on the next full boot once the principal home is mounted.
-        if !astrid_sdk::fs::exists("home://skills").unwrap_or(false) {
-            let _ = astrid_sdk::fs::create_dir("home://skills");
-        }
-        if !astrid_sdk::fs::exists("home://skills/capsule-development").unwrap_or(false) {
-            let _ = astrid_sdk::fs::create_dir("home://skills/capsule-development");
-        }
+        // without a running daemon. Use `unwrap_or`/ignored results to silently
+        // skip — the skill will be written on the next full boot once the
+        // principal home is mounted.
+        //
+        // `create_dir_all` is idempotent and creates missing parents in a single
+        // host call, replacing the prior exists-then-create_dir ladder.
+        let _ = astrid_sdk::fs::create_dir_all("home://skills/capsule-development");
         let _ = astrid_sdk::fs::write(
             "home://skills/capsule-development/SKILL.md",
             CAPSULE_DEV_SKILL.as_bytes(),
