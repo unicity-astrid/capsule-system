@@ -37,8 +37,8 @@ The LLM uses these tools to understand its own runtime before making changes. A 
 ## Development
 
 ```bash
-rustup target add wasm32-wasip1
-cargo build --target wasm32-wasip1 --release
+rustup target add wasm32-unknown-unknown
+cargo build --target wasm32-unknown-unknown --release
 ```
 
 ## License

@@ -119,9 +119,9 @@ impl SystemTools {
     #[astrid::install]
     pub fn on_install(&self) -> Result<(), SysError> {
         // home:// may not be available during lifecycle dispatch when installing
-        // without a running daemon. Use `unwrap_or`/ignored results to silently
-        // skip — the skill will be written on the next full boot once the
-        // principal home is mounted.
+        // without a running daemon. Ignore the host errors (`let _ = ...`) to
+        // silently skip — the skill will be written on the next full boot
+        // once the principal home is mounted.
         //
         // `create_dir_all` is idempotent and creates missing parents in a single
         // host call, replacing the prior exists-then-create_dir ladder.
