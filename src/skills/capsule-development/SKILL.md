@@ -284,13 +284,13 @@ Available interfaces: `session.wit`, `tool.wit`, `llm.wit`, `prompt.wit`, `conte
 ## Build
 
 ```bash
-cargo build --target wasm32-wasip1 --release
-# Output: target/wasm32-wasip1/release/my_capsule.wasm
+cargo build --target wasm32-unknown-unknown --release
+# Output: target/wasm32-unknown-unknown/release/my_capsule.wasm
 ```
 
 Requires the target:
 ```bash
-rustup target add wasm32-wasip1
+rustup target add wasm32-unknown-unknown
 ```
 
 ## Install
