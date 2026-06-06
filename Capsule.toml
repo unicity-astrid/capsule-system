@@ -13,7 +13,11 @@ type = "executable"
 [capabilities]
 fs_read  = ["home://"]
 fs_write = ["home://skills/"]
-ipc_publish = ["tool.v1.execute.*.result", "tool.v1.response.describe.*"]
+
+# Publish ACL: the [publish] keys are the only IPC-publish declaration.
+[publish]
+"tool.v1.execute.*.result" = { wit = "@unicity-astrid/wit/types/tool-call-result" }
+"tool.v1.response.describe.*" = { wit = "@unicity-astrid/wit/tool/describe-response" }
 
 # Interceptor bindings: a [subscribe] entry's `handler` binds the topic to a
 # `#[astrid::interceptor]` export. The keys also serve as the subscribe ACL.
